@@ -7,6 +7,28 @@ import image_5 from './assets/image_5.jpeg';
 import image_6 from './assets/image_6.jpeg';
 import image_7 from './assets/image_7.jpeg';
 
+import gallery_1 from './assets/gallery_1.jpeg';
+import gallery_2 from './assets/gallery_2.jpeg';
+import gallery_3 from './assets/gallery_3.jpeg';
+import gallery_4 from './assets/gallery_4.jpeg';
+import gallery_5 from './assets/gallery_5.jpeg';
+import gallery_6 from './assets/gallery_6.jpeg';
+import gallery_7 from './assets/gallery_7.jpeg';
+import gallery_8 from './assets/gallery_8.jpeg';
+import gallery_9 from './assets/gallery_9.jpeg';
+import gallery_10 from './assets/gallery_10.jpeg';
+import gallery_11 from './assets/gallery_11.jpeg';
+import gallery_12 from './assets/gallery_12.jpeg';
+import gallery_13 from './assets/gallery_13.jpeg';
+import gallery_14 from './assets/gallery_14.jpeg';
+import gallery_15 from './assets/gallery_15.jpeg';
+
+const galleryImages = [
+    gallery_1, gallery_2, gallery_3, gallery_4, gallery_5,
+    gallery_6, gallery_7, gallery_8, gallery_9, gallery_10,
+    gallery_11, gallery_12, gallery_13, gallery_14, gallery_15
+];
+
 function App() {
     useEffect(() => {
         // Reveal Logic
@@ -96,6 +118,68 @@ function App() {
         success: null,
         message: ""
     });
+
+    // Gallery Slider & Lightbox State
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [lightboxIndex, setLightboxIndex] = useState(null);
+    const [visibleCount, setVisibleCount] = useState(3);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                setVisibleCount(3);
+            } else if (window.innerWidth >= 768) {
+                setVisibleCount(2);
+            } else {
+                setVisibleCount(1);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        const maxSlide = galleryImages.length - visibleCount;
+        if (currentSlide > maxSlide) {
+            setCurrentSlide(maxSlide >= 0 ? maxSlide : 0);
+        }
+    }, [visibleCount, currentSlide]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (lightboxIndex === null) return;
+            if (e.key === 'ArrowRight') {
+                setLightboxIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+            } else if (e.key === 'ArrowLeft') {
+                setLightboxIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+            } else if (e.key === 'Escape') {
+                setLightboxIndex(null);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxIndex]);
+
+    const nextSlide = () => {
+        setCurrentSlide(prev => (prev >= galleryImages.length - visibleCount ? 0 : prev + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide(prev => (prev === 0 ? galleryImages.length - visibleCount : prev - 1));
+    };
+
+    const closeLightbox = () => setLightboxIndex(null);
+
+    const lightboxPrev = (e) => {
+        e.stopPropagation();
+        setLightboxIndex(prev => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+    };
+
+    const lightboxNext = (e) => {
+        e.stopPropagation();
+        setLightboxIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -475,8 +559,8 @@ function App() {
                     </div>
                 </div>
             </section>
-            {/* Testimonials */}
-            <section className="py-section-padding bg-surface" id="gallery">
+            {/* The Chamber */}
+            <section className="py-section-padding bg-surface" id="chamber">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <div className="text-center mb-16 reveal">
                         <span className="text-secondary font-label-caps uppercase tracking-widest mb-2 block">Prestigious
@@ -536,6 +620,66 @@ function App() {
                                 <p className="text-secondary font-label-caps uppercase">Legal Precision</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Photo Gallery Section */}
+            <section className="py-section-padding bg-surface-container-low" id="gallery">
+                <div className="max-w-container-max mx-auto px-margin-x">
+                    <div className="text-center mb-16 reveal">
+                        <span className="text-secondary font-label-caps uppercase tracking-widest mb-2 block">Moments & Milestones</span>
+                        <h2 className="font-headline-md text-on-background uppercase tracking-wider">Photo Gallery</h2>
+                        <div className="w-24 h-[1px] bg-secondary mx-auto mt-4"></div>
+                    </div>
+
+                    <div className="relative group/slider px-4">
+                        <div className="overflow-hidden">
+                            <div 
+                                className="flex transition-transform duration-500 ease-out"
+                                style={{ transform: `translateX(-${currentSlide * (100 / visibleCount)}%)` }}
+                            >
+                                {galleryImages.map((img, index) => (
+                                    <div 
+                                        key={index}
+                                        className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2"
+                                    >
+                                        <div 
+                                            className="relative aspect-[4/3] overflow-hidden border border-secondary/10 group cursor-pointer bg-black/20"
+                                            onClick={() => setLightboxIndex(index)}
+                                        >
+                                            <img 
+                                                src={img} 
+                                                alt={`Gallery Image ${index + 1}`} 
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                loading="lazy"
+                                            />
+                                            <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                <div className="w-12 h-12 rounded-full border border-secondary/35 flex items-center justify-center bg-background/80 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                                    <span className="material-symbols-outlined text-secondary text-[24px]">visibility</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Slide Buttons */}
+                        <button 
+                            onClick={prevSlide}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
+                            aria-label="Previous image"
+                        >
+                            <span className="material-symbols-outlined text-[24px]">chevron_left</span>
+                        </button>
+                        <button 
+                            onClick={nextSlide}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
+                            aria-label="Next image"
+                        >
+                            <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -822,6 +966,52 @@ function App() {
                     </div>
                 </div>
             </footer>
+
+            {/* Lightbox Modal */}
+            {lightboxIndex !== null && (
+                <div 
+                    className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col justify-center items-center p-4 transition-all duration-300"
+                    onClick={closeLightbox}
+                >
+                    <div className="absolute top-0 inset-x-0 h-20 flex items-center justify-between px-margin-x max-w-container-max mx-auto bg-gradient-to-b from-background/80 to-transparent">
+                        <span className="text-xs font-label-caps text-on-surface-variant uppercase tracking-widest">
+                            Image {lightboxIndex + 1} of {galleryImages.length}
+                        </span>
+                        <button 
+                            onClick={closeLightbox}
+                            className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
+                            aria-label="Close lightbox"
+                        >
+                            <span className="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+
+                    <div className="relative max-w-5xl max-h-[75vh] flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                        <img 
+                            src={galleryImages[lightboxIndex]} 
+                            alt={`Gallery image ${lightboxIndex + 1}`}
+                            className="max-w-full max-h-[75vh] object-contain border border-secondary/10 shadow-2xl"
+                        />
+                    </div>
+
+                    <div className="absolute bottom-8 flex items-center gap-6" onClick={(e) => e.stopPropagation()}>
+                        <button 
+                            onClick={lightboxPrev}
+                            className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/60 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
+                            aria-label="Previous image"
+                        >
+                            <span className="material-symbols-outlined text-[24px]">chevron_left</span>
+                        </button>
+                        <button 
+                            onClick={lightboxNext}
+                            className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/60 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
+                            aria-label="Next image"
+                        >
+                            <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
