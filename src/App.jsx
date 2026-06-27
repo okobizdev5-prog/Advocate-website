@@ -22,12 +22,44 @@ import gallery_12 from './assets/gallery_12.jpeg';
 import gallery_13 from './assets/gallery_13.jpeg';
 import gallery_14 from './assets/gallery_14.jpeg';
 import gallery_15 from './assets/gallery_15.jpeg';
+import gallery_16 from './assets/gallery_16.jpeg';
+import gallery_17 from './assets/gallery_17.jpeg';
+import gallery_18 from './assets/gallery_18.jpeg';
+import gallery_19 from './assets/gallery_19.jpeg';
+import gallery_20 from './assets/gallery_20.jpeg';
+import gallery_21 from './assets/gallery_21.jpeg';
+import gallery_22 from './assets/gallery_22.jpeg';
+import gallery_23 from './assets/gallery_23.jpeg';
+import gallery_24 from './assets/gallery_24.jpeg';
+import gallery_25 from './assets/gallery_25.jpeg';
+import gallery_26 from './assets/gallery_26.jpeg';
+import gallery_27 from './assets/gallery_27.jpeg';
+import gallery_28 from './assets/gallery_28.jpeg';
+import gallery_29 from './assets/gallery_29.jpeg';
+import gallery_30 from './assets/gallery_30.jpeg';
+import gallery_31 from './assets/gallery_31.jpeg';
+import gallery_32 from './assets/gallery_32.jpeg';
+import gallery_33 from './assets/gallery_33.jpeg';
+import gallery_34 from './assets/gallery_34.jpeg';
+import gallery_35 from './assets/gallery_35.jpeg';
+import gallery_36 from './assets/gallery_36.jpeg';
+import gallery_37 from './assets/gallery_37.jpeg';
+import gallery_38 from './assets/gallery_38.jpeg';
+import gallery_39 from './assets/gallery_39.jpeg';
+import gallery_40 from './assets/gallery_40.jpeg';
+import gallery_41 from './assets/gallery_41.jpeg';
+import gallery_42 from './assets/gallery_42.jpeg';
+import gallery_43 from './assets/gallery_43.jpeg';
 
 const galleryImages = [
-    gallery_1, gallery_2, gallery_3, gallery_4, gallery_5,
-    gallery_6, gallery_7, gallery_8, gallery_9, gallery_10,
-    gallery_11, gallery_12, gallery_13, gallery_14, gallery_15
+    gallery_1, gallery_2, gallery_3, gallery_4, gallery_5, gallery_6, gallery_7, gallery_8,
+    gallery_9, gallery_10, gallery_11, gallery_12, gallery_13, gallery_14, gallery_15, gallery_16,
+    gallery_17, gallery_18, gallery_19, gallery_20, gallery_21, gallery_22, gallery_23, gallery_24,
+    gallery_25, gallery_26, gallery_27, gallery_28, gallery_29, gallery_30, gallery_31, gallery_32,
+    gallery_33, gallery_34, gallery_35, gallery_36, gallery_37, gallery_38, gallery_39, gallery_40,
+    gallery_41, gallery_42, gallery_43
 ];
+
 
 function App() {
     useEffect(() => {
@@ -105,6 +137,9 @@ function App() {
             });
         };
     }, []);
+    // Mobile Menu State
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
     // Form Submit State
     const [formData, setFormData] = useState({
         firstName: "",
@@ -181,6 +216,19 @@ function App() {
         setLightboxIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1));
     };
 
+    const handleScrollToSection = (e, id) => {
+        e.preventDefault();
+        setIsMobileMenuOpen(false);
+        const element = document.getElementById(id);
+        if (element) {
+            setTimeout(() => {
+                const yOffset = -80; // height of sticky top navbar
+                const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }, 200); // Wait 200ms for mobile menu close collapse transition
+        }
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -251,52 +299,88 @@ function App() {
             <nav className="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant/10">
                 <div className="flex justify-between items-center h-20 px-margin-x max-w-container-max mx-auto">
                     <div className="flex items-center gap-4">
-                        <span className="hidden lg:block font-headline-sm text-secondary uppercase tracking-widest text-[20px]">The
-                            Legal Care</span>
+                        <a 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsMobileMenuOpen(false);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="block font-headline-sm text-secondary uppercase tracking-widest text-[1rem] md:text-[1.25rem] cursor-pointer"
+                            href="#"
+                        >
+                            The Legal Care
+                        </a>
                     </div>
                     <div className="hidden md:flex items-center gap-stack-lg font-body-md text-body-md uppercase tracking-widest">
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                            href="#services">Practice Areas</a>
+                            href="#services" onClick={(e) => handleScrollToSection(e, 'services')}>Practice Areas</a>
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                            href="#about">About Me</a>
+                            href="#about" onClick={(e) => handleScrollToSection(e, 'about')}>About Me</a>
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                            href="#testimonials">Insights</a>
+                            href="#testimonials" onClick={(e) => handleScrollToSection(e, 'testimonials')}>Insights</a>
                         <a className="text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                            href="#contact">Contact</a>
+                            href="#contact" onClick={(e) => handleScrollToSection(e, 'contact')}>Contact</a>
                     </div>
-                    <a className="bg-secondary text-on-secondary-fixed px-8 py-3 font-label-caps uppercase transition-all duration-300 hover:brightness-110 shadow-lg shadow-secondary/10"
-                        href="#contact">
-                        Consultation
-                    </a>
+                    <div className="flex items-center gap-4">
+                        <a className="hidden md:inline-block bg-secondary text-on-secondary-fixed px-8 py-3 font-label-caps uppercase transition-all duration-300 hover:brightness-110 shadow-lg shadow-secondary/10"
+                            href="#contact" onClick={(e) => handleScrollToSection(e, 'contact')}>
+                            Consultation
+                        </a>
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="block md:hidden text-on-surface hover:text-secondary p-2 focus:outline-none transition-colors"
+                            aria-label="Toggle Menu"
+                        >
+                            <span className="material-symbols-outlined text-[1.75rem] select-none align-middle">
+                                {isMobileMenuOpen ? 'close' : 'menu'}
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                {/* Mobile Menu Dropdown */}
+                <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-surface ${isMobileMenuOpen ? 'max-h-[350px] border-t border-outline-variant/10' : 'max-h-0'}`}>
+                    <div className="flex flex-col px-margin-x py-6 gap-4 font-body-md text-body-md uppercase tracking-widest">
+                        <a className="text-on-surface-variant hover:text-secondary py-2 transition-colors duration-300 cursor-pointer"
+                            href="#services" onClick={(e) => handleScrollToSection(e, 'services')}>Practice Areas</a>
+                        <a className="text-on-surface-variant hover:text-secondary py-2 transition-colors duration-300 cursor-pointer"
+                            href="#about" onClick={(e) => handleScrollToSection(e, 'about')}>About Me</a>
+                        <a className="text-on-surface-variant hover:text-secondary py-2 transition-colors duration-300 cursor-pointer"
+                            href="#testimonials" onClick={(e) => handleScrollToSection(e, 'testimonials')}>Insights</a>
+                        <a className="text-on-surface-variant hover:text-secondary py-2 transition-colors duration-300 cursor-pointer"
+                            href="#contact" onClick={(e) => handleScrollToSection(e, 'contact')}>Contact</a>
+                        <a className="bg-secondary text-on-secondary-fixed text-center py-3 mt-2 font-label-caps uppercase transition-all duration-300 hover:brightness-110 shadow-lg shadow-secondary/10 cursor-pointer"
+                            href="#contact" onClick={(e) => handleScrollToSection(e, 'contact')}>
+                            Consultation
+                        </a>
+                    </div>
                 </div>
             </nav>
             {/* Hero Section */}
-            <header className="relative min-h-[90vh] flex items-center overflow-hidden bg-primary-container">
+            <header className="relative min-h-[calc(100vh-5rem)] md:min-h-[90vh] flex items-center overflow-hidden bg-primary-container py-6 md:py-0">
                 <div className="absolute inset-0 opacity-10 pointer-events-none">
                     <div
                         className="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-secondary/20 via-transparent to-transparent">
                     </div>
                 </div>
-                <div className="max-w-container-max mx-auto px-margin-x grid lg:grid-cols-2 gap-16 items-center">
+                <div className="max-w-container-max mx-auto px-margin-x grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
                     <div className="z-10 order-2 lg:order-1">
-                        <div className="inline-block px-4 py-1 mb-6 border border-secondary/30 bg-secondary/5">
-                            <span className="text-secondary font-label-caps uppercase">Professional Excellence</span>
+                        <div className="inline-block px-4 py-1 mb-3 md:mb-6 border border-secondary/30 bg-secondary/5">
+                            <span className="text-secondary font-label-caps uppercase text-[10px] md:text-xs">Professional Excellence</span>
                         </div>
-                        <h1 className="font-display-lg text-display-lg-mobile lg:text-display-lg text-on-background mb-4">
+                        <h1 className="font-display-lg text-[1.75rem] md:text-display-lg-mobile lg:text-display-lg text-on-background mb-3 md:mb-4 leading-tight">
                             Advocate <span className="text-secondary">Muhammad Feroz Alam</span>
                         </h1>
-                        <div className="mb-8 max-w-lg border-l-2 border-secondary/40 pl-5 space-y-3">
+                        <div className="mb-4 md:mb-8 max-w-lg border-l-2 border-secondary/40 pl-3 md:pl-5 space-y-2 md:space-y-3">
                             <div className="space-y-1">
-                                <p className="font-headline-sm text-on-surface-variant/90 leading-relaxed">
+                                <p className="font-headline-sm text-xs md:text-base lg:text-headline-sm text-on-surface-variant/90 leading-normal">
                                     Ex-Legal Advisor, <span className="text-secondary/80 font-semibold">Intraco Group</span>
                                 </p>
-                                <p className="font-headline-sm text-on-surface-variant/90 leading-relaxed">
-                                    Legal Advisor, <span className="text-secondary/80 font-semibold">L.G Butterfly Marketing
-                                        Limited</span>
+                                <p className="font-headline-sm text-xs md:text-base lg:text-headline-sm text-on-surface-variant/90 leading-normal">
+                                    Legal Advisor, <span className="text-secondary/80 font-semibold">L.G Butterfly Marketing Limited</span>
                                 </p>
                             </div>
                             <div
-                                className="flex flex-wrap items-center gap-x-2 gap-y-1 text-on-surface-variant/70 text-sm tracking-widest uppercase font-medium">
+                                className="flex flex-wrap items-center gap-x-2 gap-y-1 text-on-surface-variant/70 text-[10px] md:text-sm tracking-widest uppercase font-medium leading-normal">
                                 <span>M.S.S</span>
                                 <span className="text-secondary/50">•</span>
                                 <span>L.L.B</span>
@@ -305,23 +389,22 @@ function App() {
                                 <span className="text-secondary/50">•</span>
                                 <span>L.L.M</span>
                                 <br />
-                                <span className="text-secondary/50">•Advocate Dhaka Judge Court <br />(Civil,Criminal Trade Mark,Tax
-                                    vat,Company <br />Legal Advisor)</span>
+                                <span className="text-secondary/50">•Advocate Dhaka Judge Court <br />(Civil,Criminal Trade Mark,Tax vat,Company <br />Legal Advisor)</span>
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-stack-md">
-                            <a className="px-10 py-4 bg-secondary text-on-secondary-fixed font-label-caps uppercase font-bold transition-all hover:scale-105 shadow-xl shadow-secondary/10"
+                        <div className="flex flex-wrap gap-3 md:gap-stack-md">
+                            <a className="px-5 py-3 md:px-10 md:py-4 bg-secondary text-on-secondary-fixed font-label-caps uppercase font-bold text-xs md:text-sm transition-all hover:scale-105 shadow-xl shadow-secondary/10"
                                 href="#contact">
                                 Book Consultation
                             </a>
-                            <a className="px-10 py-4 border border-on-background text-on-background font-label-caps uppercase font-bold transition-all hover:bg-on-background/10"
+                            <a className="px-5 py-3 md:px-10 md:py-4 border border-on-background text-on-background font-label-caps uppercase font-bold text-xs md:text-sm transition-all hover:bg-on-background/10"
                                 href="#contact">
                                 Contact Now
                             </a>
                         </div>
                     </div>
-                    <div className="relative order-1 lg:order-2">
-                        <div className="relative z-10 aspect-[4/5] overflow-hidden border-[1px] border-secondary/20 group">
+                    <div className="relative order-1 lg:order-2 flex justify-center">
+                        <div className="relative z-10 w-full max-w-[240px] md:max-w-[320px] lg:max-w-none aspect-[4/5] overflow-hidden border-[1px] border-secondary/20 group">
                             <img alt="Advocate Muhammad Feroz Alam"
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 src={image_1} />
@@ -330,8 +413,8 @@ function App() {
                             </div>
                         </div>
                         {/* Decorative element */}
-                        <div className="absolute -bottom-6 -left-6 w-32 h-32 border-l-2 border-b-2 border-secondary/40 z-0"></div>
-                        <div className="absolute -top-6 -right-6 w-32 h-32 border-r-2 border-t-2 border-secondary/40 z-0"></div>
+                        <div className="absolute -bottom-4 -left-4 w-20 h-20 border-l-2 border-b-2 border-secondary/40 z-0 hidden lg:block"></div>
+                        <div className="absolute -top-4 -right-4 w-20 h-20 border-r-2 border-t-2 border-secondary/40 z-0 hidden lg:block"></div>
                     </div>
                 </div>
             </header>
@@ -357,7 +440,7 @@ function App() {
                 </div>
             </section>
             {/* About Section */}
-            <section className="py-section-padding bg-surface" id="about">
+            <section className="py-section-padding bg-surface scroll-mt-20" id="about">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div className="reveal">
@@ -422,7 +505,7 @@ function App() {
                 </div>
             </section>
             {/* Services Section (Bento Grid Style) */}
-            <section className="py-section-padding bg-surface-container-low" id="services">
+            <section className="py-section-padding bg-surface-container-low scroll-mt-20" id="services">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <div className="text-center mb-16 reveal">
                         <h2 className="font-headline-md text-on-background mb-4 uppercase tracking-wider">Strategic Practice Areas
@@ -625,7 +708,7 @@ function App() {
             </section>
 
             {/* Photo Gallery Section */}
-            <section className="py-section-padding bg-surface-container-low" id="gallery">
+            <section className="py-section-padding bg-surface-container-low scroll-mt-20" id="gallery">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <div className="text-center mb-16 reveal">
                         <span className="text-secondary font-label-caps uppercase tracking-widest mb-2 block">Moments & Milestones</span>
@@ -635,28 +718,28 @@ function App() {
 
                     <div className="relative group/slider px-4">
                         <div className="overflow-hidden">
-                            <div 
+                            <div
                                 className="flex transition-transform duration-500 ease-out"
                                 style={{ transform: `translateX(-${currentSlide * (100 / visibleCount)}%)` }}
                             >
                                 {galleryImages.map((img, index) => (
-                                    <div 
+                                    <div
                                         key={index}
                                         className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2"
                                     >
-                                        <div 
+                                        <div
                                             className="relative aspect-[4/3] overflow-hidden border border-secondary/10 group cursor-pointer bg-black/20"
                                             onClick={() => setLightboxIndex(index)}
                                         >
-                                            <img 
-                                                src={img} 
-                                                alt={`Gallery Image ${index + 1}`} 
+                                            <img
+                                                src={img}
+                                                alt={`Gallery Image ${index + 1}`}
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                                 loading="lazy"
                                             />
                                             <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                                 <div className="w-12 h-12 rounded-full border border-secondary/35 flex items-center justify-center bg-background/80 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                                    <span className="material-symbols-outlined text-secondary text-[24px]">visibility</span>
+                                                    <span className="material-symbols-outlined text-secondary text-[1.5rem]">visibility</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -666,24 +749,28 @@ function App() {
                         </div>
 
                         {/* Slide Buttons */}
-                        <button 
-                            onClick={prevSlide}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
-                            aria-label="Previous image"
-                        >
-                            <span className="material-symbols-outlined text-[24px]">chevron_left</span>
-                        </button>
-                        <button 
-                            onClick={nextSlide}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
-                            aria-label="Next image"
-                        >
-                            <span className="material-symbols-outlined text-[24px]">chevron_right</span>
-                        </button>
+                        {galleryImages.length > visibleCount && (
+                            <>
+                                <button
+                                    onClick={prevSlide}
+                                    className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
+                                    aria-label="Previous image"
+                                >
+                                    <span className="material-symbols-outlined text-[1.5rem]">chevron_left</span>
+                                </button>
+                                <button
+                                    onClick={nextSlide}
+                                    className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl z-10 cursor-pointer"
+                                    aria-label="Next image"
+                                >
+                                    <span className="material-symbols-outlined text-[1.5rem]">chevron_right</span>
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
-            <section className="py-section-padding bg-surface-container-lowest" id="testimonials">
+            <section className="py-section-padding bg-surface-container-lowest scroll-mt-20" id="testimonials">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <h2 className="font-headline-md text-center mb-16">Client <span className="text-secondary">Testimonials</span></h2>
                     <div className="grid md:grid-cols-3 gap-8">
@@ -761,7 +848,7 @@ function App() {
                     <div className="space-y-4">
                         <div className="border-b border-outline-variant/10 py-6 group cursor-pointer accordion-item">
                             <div className="flex justify-between items-center group-hover:text-secondary transition-colors">
-                                <h4 className="font-headline-sm text-[20px]">What areas of law do you practice?</h4>
+                                <h4 className="font-headline-sm text-[1.25rem]">What areas of law do you practice?</h4>
                                 <span className="material-symbols-outlined transition-transform duration-300">expand_more</span>
                             </div>
                             <div className="max-h-0 overflow-hidden transition-all duration-300 accordion-content">
@@ -770,7 +857,7 @@ function App() {
                         </div>
                         <div className="border-b border-outline-variant/10 py-6 group cursor-pointer accordion-item">
                             <div className="flex justify-between items-center group-hover:text-secondary transition-colors">
-                                <h4 className="font-headline-sm text-[20px]">Do you provide legal consultation for businesses?</h4>
+                                <h4 className="font-headline-sm text-[1.25rem]">Do you provide legal consultation for businesses?</h4>
                                 <span className="material-symbols-outlined transition-transform duration-300">expand_more</span>
                             </div>
                             <div className="max-h-0 overflow-hidden transition-all duration-300 accordion-content">
@@ -779,7 +866,7 @@ function App() {
                         </div>
                         <div className="border-b border-outline-variant/10 py-6 group cursor-pointer accordion-item">
                             <div className="flex justify-between items-center group-hover:text-secondary transition-colors">
-                                <h4 className="font-headline-sm text-[20px]">How can I schedule a consultation?</h4>
+                                <h4 className="font-headline-sm text-[1.25rem]">How can I schedule a consultation?</h4>
                                 <span className="material-symbols-outlined transition-transform duration-300">expand_more</span>
                             </div>
                             <div className="max-h-0 overflow-hidden transition-all duration-300 accordion-content">
@@ -790,7 +877,7 @@ function App() {
                 </div>
             </section>
             {/* Contact Form Section */}
-            <section className="py-section-padding bg-surface-container-high relative overflow-hidden" id="contact">
+            <section className="py-section-padding bg-surface-container-high relative overflow-hidden scroll-mt-20" id="contact">
                 <div className="max-w-container-max mx-auto px-margin-x">
                     <div className="grid lg:grid-cols-2 gap-20">
                         <div className="reveal">
@@ -800,7 +887,7 @@ function App() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label
-                                            className="font-label-caps uppercase text-[10px] text-on-surface-variant mb-2 block">First
+                                            className="font-label-caps uppercase text-[0.625rem] text-on-surface-variant mb-2 block">First
                                             Name</label>
                                         <input
                                             name="firstName"
@@ -810,7 +897,7 @@ function App() {
                                     </div>
                                     <div>
                                         <label
-                                            className="font-label-caps uppercase text-[10px] text-on-surface-variant mb-2 block">Last
+                                            className="font-label-caps uppercase text-[0.625rem] text-on-surface-variant mb-2 block">Last
                                             Name</label>
                                         <input
                                             name="lastName"
@@ -821,7 +908,7 @@ function App() {
                                 </div>
                                 <div>
                                     <label
-                                        className="font-label-caps uppercase text-[10px] text-on-surface-variant mb-2 block ">Email
+                                        className="font-label-caps uppercase text-[0.625rem] text-on-surface-variant mb-2 block ">Email
                                         Address</label>
                                     <input
                                         name="email"
@@ -831,7 +918,7 @@ function App() {
                                 </div>
                                 <div>
                                     <label
-                                        className="font-label-caps uppercase text-[10px] text-on-surface-variant mb-2 block">Subject</label>
+                                        className="font-label-caps uppercase text-[0.625rem] text-on-surface-variant mb-2 block">Subject</label>
                                     <select
                                         name="subject"
                                         value={formData.subject}
@@ -844,7 +931,7 @@ function App() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="font-label-caps uppercase text-[10px] text-on-surface-variant mb-2 block">Your
+                                    <label className="font-label-caps uppercase text-[0.625rem] text-on-surface-variant mb-2 block">Your
                                         Message</label>
                                     <textarea
                                         name="message"
@@ -923,7 +1010,7 @@ function App() {
                                 </div>
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div
-                                        className="bg-secondary text-on-secondary-fixed px-4 py-2 font-label-caps text-[10px] shadow-lg">
+                                        className="bg-secondary text-on-secondary-fixed px-4 py-2 font-label-caps text-[0.625rem] shadow-lg">
                                         VIEW LOCATION</div>
                                 </div>
                             </div>
@@ -936,7 +1023,7 @@ function App() {
                 <div className="max-w-container-max mx-auto flex flex-col md:flex-row justify-between gap-stack-lg">
                     <div className="md:w-1/3">
                         <div className="mb-8">
-                            <span className="font-headline-sm text-secondary uppercase tracking-widest text-[20px]">The Legal Care</span>
+                            <span className="font-headline-sm text-secondary uppercase tracking-widest text-[1.25rem]">The Legal Care</span>
                         </div>
                         <p className="font-body-md text-on-surface-variant leading-relaxed">
                             With extensive experience in litigation and legal advisory services, Advocate Muhammad Feroz Alam delivers trusted legal solutions tailored to the needs of individuals and businesses. His practice is founded on professionalism, strategic insight, and unwavering dedication to protecting clients' interests.
@@ -969,7 +1056,7 @@ function App() {
 
             {/* Lightbox Modal */}
             {lightboxIndex !== null && (
-                <div 
+                <div
                     className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col justify-center items-center p-4 transition-all duration-300"
                     onClick={closeLightbox}
                 >
@@ -977,37 +1064,37 @@ function App() {
                         <span className="text-xs font-label-caps text-on-surface-variant uppercase tracking-widest">
                             Image {lightboxIndex + 1} of {galleryImages.length}
                         </span>
-                        <button 
+                        <button
                             onClick={closeLightbox}
                             className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/85 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
                             aria-label="Close lightbox"
                         >
-                            <span className="material-symbols-outlined text-[20px]">close</span>
+                            <span className="material-symbols-outlined text-[1.25rem]">close</span>
                         </button>
                     </div>
 
                     <div className="relative max-w-5xl max-h-[75vh] flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
-                        <img 
-                            src={galleryImages[lightboxIndex]} 
+                        <img
+                            src={galleryImages[lightboxIndex]}
                             alt={`Gallery image ${lightboxIndex + 1}`}
                             className="max-w-full max-h-[75vh] object-contain border border-secondary/10 shadow-2xl"
                         />
                     </div>
 
                     <div className="absolute bottom-8 flex items-center gap-6" onClick={(e) => e.stopPropagation()}>
-                        <button 
+                        <button
                             onClick={lightboxPrev}
                             className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/60 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
                             aria-label="Previous image"
                         >
-                            <span className="material-symbols-outlined text-[24px]">chevron_left</span>
+                            <span className="material-symbols-outlined text-[1.5rem]">chevron_left</span>
                         </button>
-                        <button 
+                        <button
                             onClick={lightboxNext}
                             className="w-12 h-12 flex items-center justify-center border border-secondary/20 bg-background/60 hover:bg-secondary hover:text-on-secondary-fixed transition-all duration-300 shadow-xl cursor-pointer"
                             aria-label="Next image"
                         >
-                            <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+                            <span className="material-symbols-outlined text-[1.5rem]">chevron_right</span>
                         </button>
                     </div>
                 </div>
